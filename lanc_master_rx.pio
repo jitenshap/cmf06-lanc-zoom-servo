@@ -1,0 +1,26 @@
+.program lanc_master_rx
+
+; One-wire open-drain LANC master receive.
+; SET PINS keeps the output value low; SET PINDIRS switches between
+; actively pulling the line low and releasing it to the external pull-up.
+
+.wrap_target
+    set y, 7
+byte_loop:
+    set pins, 0
+    set x, 7
+    set pindirs, 1 [7]
+    set pindirs, 0 [3]
+
+bitloop:
+    in pins, 1
+    jmp x-- bitloop [6]
+
+    nop [16]
+    jmp y-- byte_loop
+
+    set x, 13
+frame_gap:
+    nop [31]
+    jmp x-- frame_gap [31]
+.wrap
