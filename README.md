@@ -4,6 +4,8 @@ Raspberry Pi Pico 2 firmware that turns a hacked ZHIYUN CMF-06 focus/zoom motor 
 
 The Pico acts as a LANC master for a zoom controller, decodes Sony LANC zoom commands, and drives the CMF-06 over UART in zoom-control mode.
 
+![CMF-06 LANC zoom servo demo](resource/demo.gif)
+
 ## Hardware
 
 ### Pico 2 pins
@@ -125,6 +127,8 @@ Main options are near the top of [main.c](./main.c):
 true:  0xFFFF wraps to 0x0000, and 0x0000 wraps to 0xFFFF
 false: endpoints clamp, with deceleration near the final 512 counts
 ```
+
+Set `FOLLOW_FOCUS_WRAP_ZOOM` to `true` when the CMF-06 is not calibrated and you want to use it as an endlessly rotating servo. In that mode, the virtual 16-bit position counter wraps around instead of stopping at either end.
 
 Zoom speed map:
 
